@@ -3,8 +3,8 @@ class Segment
   attr_accessor :key, :translation, :language
 
   def initialize(key, translation, language)
-    @key = key
-    @translation = translation.replace_escaped
+    @key = key.remove_comments
+    @translation = translation.remove_comments.replace_escaped
     @language = language
   end
 

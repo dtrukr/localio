@@ -33,7 +33,7 @@ class GoogleDriveProcessor
       when 0
         abort "Unable to find any spreadsheet matching your criteria: #{spreadsheet}"
       else
-        abort 'More than one match found. You have to be more specific!'
+        abort "More than one match found (#{matching_spreadsheets.count}). You have to be more specific!"
     end
 
 

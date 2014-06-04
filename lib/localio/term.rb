@@ -8,7 +8,7 @@ class Term
   end
 
   def is_comment?
-    @keyword.downcase == '[comment]'
+    /\[comment\]/i.match(@keyword).nil? == false
   end
 
 end

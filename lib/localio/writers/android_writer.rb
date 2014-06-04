@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'localio/template_handler'
 require 'localio/segments_list_holder'
 require 'localio/segment'
@@ -36,6 +37,6 @@ class AndroidWriter
   end
   
   def self.android_parsing(term)
-    term.gsub('&', '&amp;').gsub('...', '…')
+    term.gsub('&', '&amp;').gsub('...', '…').gsub('%@', '%s').gsub('<', '&lt;').gsub('>', '&gt;')
   end
 end

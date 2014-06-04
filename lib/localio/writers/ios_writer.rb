@@ -2,10 +2,21 @@ require 'localio/template_handler'
 require 'localio/segments_list_holder'
 require 'localio/segment'
 require 'localio/formatter'
+require 'json'
 
 class IosWriter
   def self.write(languages, terms, path, formatter, options)
-    puts 'Writing iOS translations...'
+    puts 'Writing iOS translations (new!)...'
+
+	puts "Nice-looking keys:"
+	ks = []
+	terms.each {|term|
+		ks << term.keyword.remove_comments.strip.gsub(/\s\s+/,' ').gsub(/[^0-9a-z _]/i, '').strip.gsub(" ","_").upcase
+	}
+	
+	ks.each{|k| puts k}
+	puts ""
+
 
     constant_segments = nil
     languages.keys.each do |lang|
@@ -17,9 +28,10 @@ class IosWriter
       constant_segments = SegmentsListHolder.new lang
       terms.each do |term|
         key = Formatter.format(term.keyword, formatter, method(:ios_key_formatter))
-        translation = term.values[lang]
+        translation = term.values[lang].to_json
         segment = Segment.new(key, translation, lang)
         segment.key = nil if term.is_comment?
+        next unless !key.remove_comments.blank?
         segments.segments << segment
 
         unless term.is_comment?

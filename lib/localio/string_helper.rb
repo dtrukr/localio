@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class String
   def self.colorize(text, color_code)
     "\e[#{color_code}m#{text}\e[0m"
@@ -50,5 +51,9 @@ class String
 
   def blank?
     respond_to?(:empty?) ? empty? : !self
+  end
+  
+  def remove_comments
+  	self.gsub(/\s*\[.*?\]\s*/,'').gsub( /\A"/m, "" ).gsub( /"\Z/m, "" ).gsub( /\A'/m, "" ).gsub( /'\Z/m, "" ).gsub( /\A‘/m, "" ).gsub( /‘\Z/m, "" ).gsub( /\A”/m, "" ).gsub( /”\Z/m, "" )
   end
 end
